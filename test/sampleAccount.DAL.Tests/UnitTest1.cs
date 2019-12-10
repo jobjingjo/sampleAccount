@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using sampleAccount;
+using sampleAccount.DAL;
 
-namespace sampleAccount.Tests
+namespace sampleAccount.DAL.Tests
 {
     [TestClass]
     public class UnitTest1
@@ -18,6 +18,12 @@ namespace sampleAccount.Tests
         public void TestMethod1()
         {
             _target.Func1();
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            _target.Func2();
         }
     }
 }

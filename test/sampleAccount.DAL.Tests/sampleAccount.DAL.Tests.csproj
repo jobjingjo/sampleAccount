@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\sampleAccount\sampleAccount.csproj" />
+    <ProjectReference Include="..\..\source\sampleAccount.DAL\sampleAccount.DAL.csproj" />
   </ItemGroup>
 
 </Project>
