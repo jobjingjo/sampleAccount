@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sampleAccount", "source\sam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9EE04549-6CB8-48C0-984A-82782684AE67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sampleAccount.Tests", "sampleAccount.Tests\sampleAccount.Tests.csproj", "{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sampleAccount.Tests", "test\sampleAccount.Tests\sampleAccount.Tests.csproj", "{9944646B-1671-4160-B2B9-C22F56C199C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{C26B4644-3EC8-4909-B062-195D7927FEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26B4644-3EC8-4909-B062-195D7927FEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C26B4644-3EC8-4909-B062-195D7927FEED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9944646B-1671-4160-B2B9-C22F56C199C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9944646B-1671-4160-B2B9-C22F56C199C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9944646B-1671-4160-B2B9-C22F56C199C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9944646B-1671-4160-B2B9-C22F56C199C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6BA37801-6D43-4889-9CF9-0BDD8BD71CF0} = {9EE04549-6CB8-48C0-984A-82782684AE67}
+		{9944646B-1671-4160-B2B9-C22F56C199C4} = {9EE04549-6CB8-48C0-984A-82782684AE67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9316BAFA-6832-4656-8782-AB60ABB56167}
