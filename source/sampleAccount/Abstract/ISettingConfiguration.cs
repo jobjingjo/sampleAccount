@@ -6,6 +6,6 @@ namespace sampleAccount.Abstract
 {
     public interface ISettingConfiguration
     {
-        decimal DepositFee { get; }
+        decimal DepositFeeInPercent { get; }
     }
 }

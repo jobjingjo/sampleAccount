@@ -8,7 +8,7 @@ namespace sampleAccount.Abstract
     public interface IAccountRepository
     {
         Account FindAccount(string accountName);
-        decimal UpdateTransaction(Account account, AccountTransaction accountTransaction);
+        void UpdateTransaction(Account account, AccountTransaction accountTransaction);
         void CollectFee(Account account, decimal fee);
     }
 }

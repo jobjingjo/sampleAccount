@@ -6,7 +6,7 @@ namespace sampleAccount.Models
 {
     public enum TransactionType
     {
-        Deposite = 0,
+        Deposit = 0,
         Withdraw = 1
     }
 }
