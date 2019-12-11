@@ -47,10 +47,12 @@ namespace sampleAccount.Services
                 if (result.Balance >= accountTransaction.Amount)
                 {
                     result.Status = OperationStatus.Ok;
-                    result.Balance = _accountRepository.UpdateTransaction(account, accountTransaction);
+                    account.Balance -= accountTransaction.Amount;
+                    _accountRepository.UpdateTransaction(account, accountTransaction);
+                    result.Balance = account.Balance;
                 }
                 else {
-                    result.Status = OperationStatus.BalanceNotValid;
+                    result.Status = OperationStatus.NotEnoughMoney;
                 }
             }
             return result;
@@ -67,18 +69,13 @@ namespace sampleAccount.Services
             else
             {
                 result.Balance = account.Balance;
-                var fee = _settingConfiguration.DepositFee;
-                if (accountTransaction.Amount >= fee)
-                {
-                    result.Status = OperationStatus.Ok;
-                    accountTransaction.Amount -= _settingConfiguration.DepositFee;
-                    result.Balance = _accountRepository.UpdateTransaction(account, accountTransaction);
-                    _accountRepository.CollectFee(account, fee);
-                }
-                else
-                {
-                    result.Status = OperationStatus.BalanceNotValid;
-                }
+                var fee = (_settingConfiguration.DepositFeeInPercent * accountTransaction.Amount) / 100;
+                result.Status = OperationStatus.Ok;
+                accountTransaction.Amount -= fee;
+                account.Balance += accountTransaction.Amount;
+                _accountRepository.UpdateTransaction(account, accountTransaction);
+                if (fee > 0) _accountRepository.CollectFee(account, fee);
+                result.Balance = account.Balance;
             }
             return result;
         }
