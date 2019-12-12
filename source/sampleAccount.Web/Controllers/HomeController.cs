@@ -12,6 +12,11 @@ namespace sampleAccount.Web.Controllers
     {
         public IActionResult Index()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {                
+                return RedirectToAction("CreateAsync", "Account");
+            }
+            
             return View();
         }
 

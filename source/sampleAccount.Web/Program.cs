@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using sampleAccount.DAL.Data;
 
 namespace sampleAccount.Web
 {
@@ -19,8 +20,8 @@ namespace sampleAccount.Web
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                //var context = scope.ServiceProvider.GetService<DefaultContext>();
-                //context.Database.EnsureCreated();
+                var context = scope.ServiceProvider.GetService<DataDbContext>();
+                context.Database.EnsureCreated();
             }
             host.Run();
         }

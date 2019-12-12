@@ -29,20 +29,73 @@ namespace sampleAccount.Web.Controllers
         }
         public IActionResult Index()
         {
+            var account =_accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            ViewData["Balance"] = account.Balance;
+            ViewData["IBAN"] = account.AccountName;
             return View();
         }
 
-        public IActionResult Create()
-        {            
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create([FromBody] CreateAccountModel createAccountModel)
+        public async Task<IActionResult> CreateAsync()
         {
-            var account = _mapper.Map<Account>(createAccountModel);
-            var result = _accountService.CreateAccount(account);
-            return Create();
+            var account = _accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            if (account!=null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+            account = new Account();
+            account.AccountName = await _accountService.GetIBAN();
+            account.Owner = HttpContext.User.Identity.Name;
+            account = await _accountService.CreateAccountAsync(account);
+            return View(account);
+        }
+
+        public async Task<IActionResult> TransactionAsync(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            //var students = from s in _context.Students
+            //               select s;
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    students = students.Where(s => s.LastName.Contains(searchString)
+            //                           || s.FirstMidName.Contains(searchString));
+            //}
+            //switch (sortOrder)
+            //{
+            //    case "name_desc":
+            //        students = students.OrderByDescending(s => s.LastName);
+            //        break;
+            //    case "Date":
+            //        students = students.OrderBy(s => s.EnrollmentDate);
+            //        break;
+            //    case "date_desc":
+            //        students = students.OrderByDescending(s => s.EnrollmentDate);
+            //        break;
+            //    default:
+            //        students = students.OrderBy(s => s.LastName);
+            //        break;
+            //}
+            List<TransactionModel> items = new List<TransactionModel>();
+            int pageSize = 3;
+            //return View(await PaginatedList<TransactionModel>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<TransactionModel>.CreateAsync(items.AsQueryable(), pageNumber ?? 1, pageSize));
         }
 
         public IActionResult Balance(string accountNumber)

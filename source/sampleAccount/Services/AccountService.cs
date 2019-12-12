@@ -10,14 +10,24 @@ namespace sampleAccount.Services
 {
     public class AccountService: IAccountService
     {
-        public Account CreateAccount(Account account)
+        private readonly IAccountRepository _accountRepository;
+
+        public AccountService(IAccountRepository accountRepository) {
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
+        }
+        public async Task<Account> CreateAccountAsync(Account account)
         {
-            throw new NotImplementedException();
+            return await _accountRepository.CreateAccountAsync(account);
         }
 
         public Account GetAccountByNumber(string accountNumber)
         {
-            throw new NotImplementedException();
+            return _accountRepository.FindAccount(accountNumber);
+        }
+
+        public Account GetAccountByUserName(string name)
+        {
+            return _accountRepository.FindAccountByOwner(name);
         }
 
         public async Task<string> GetIBAN()

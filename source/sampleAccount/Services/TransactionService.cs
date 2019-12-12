@@ -48,7 +48,7 @@ namespace sampleAccount.Services
                 {
                     result.Status = OperationStatus.Ok;
                     account.Balance -= accountTransaction.Amount;
-                    _accountRepository.UpdateTransaction(account, accountTransaction);
+                    _accountRepository.UpdateTransactionAsync(account, accountTransaction);
                     result.Balance = account.Balance;
                 }
                 else {
@@ -73,8 +73,8 @@ namespace sampleAccount.Services
                 result.Status = OperationStatus.Ok;
                 accountTransaction.Amount -= fee;
                 account.Balance += accountTransaction.Amount;
-                _accountRepository.UpdateTransaction(account, accountTransaction);
-                if (fee > 0) _accountRepository.CollectFee(account, fee);
+                _accountRepository.UpdateTransactionAsync(account, accountTransaction);
+                if (fee > 0) _accountRepository.CollectFeeAsync(account, fee);
                 result.Balance = account.Balance;
             }
             return result;

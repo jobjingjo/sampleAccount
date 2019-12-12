@@ -44,16 +44,15 @@ namespace sampleAccount.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<DefaultContext>(opt =>
+            services.AddDbContext<DataDbContext>(options =>
+                 options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"))
+                 .UseLazyLoadingProxies());
 
-            //        opt.UseInMemoryDatabase("Sample")
-            //        .UseLazyLoadingProxies()
-            //    );
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ISettingConfiguration, SettingConfiguration>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
