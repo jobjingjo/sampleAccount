@@ -1,12 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-	<UserSecretsId>aspnet-sampleAccount.DAL-B052601B-56FC-495E-998A-D1E8AAF4132D</UserSecretsId>
+    <DebugType>full</DebugType>
+    <UserSecretsId>aspnet-sampleAccount.Web-B052601B-56FC-495E-998A-D1E8AAF4132D</UserSecretsId>
   </PropertyGroup>
 
+
   <ItemGroup>
-	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />
@@ -20,9 +22,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
+
   <ItemGroup>
+    <ProjectReference Include="..\sampleAccount.DAL\sampleAccount.DAL.csproj" />
     <ProjectReference Include="..\sampleAccount\sampleAccount.csproj" />
   </ItemGroup>
+
 </Project>

@@ -88,9 +88,9 @@ namespace sampleAccount.Tests
                 .Returns(account);
             _settingConfigurationMock.Setup(x => x.DepositFeeInPercent)
                 .Returns(0.1m);
-            _accountRepositoryMock.Setup(x => x.UpdateTransaction(account, accountTransaction));
+            _accountRepositoryMock.Setup(x => x.UpdateTransactionAsync(account, accountTransaction));
 
-            _accountRepositoryMock.Setup(x => x.CollectFee(account, It.IsAny<decimal>()));
+            _accountRepositoryMock.Setup(x => x.CollectFeeAsync(account, It.IsAny<decimal>()));
 
             //Act
             var result = _target.Deposit(accountTransaction);
@@ -135,7 +135,7 @@ namespace sampleAccount.Tests
             _accountRepositoryMock.Setup(x => x.FindAccount(accountTransaction.AccountName))
                 .Returns(account);
 
-            _accountRepositoryMock.Setup(x => x.UpdateTransaction(account, accountTransaction));
+            _accountRepositoryMock.Setup(x => x.UpdateTransactionAsync(account, accountTransaction));
 
             //Act
             var result = _target.Withdraw(accountTransaction);
