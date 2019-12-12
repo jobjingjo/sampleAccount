@@ -28,6 +28,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\sampleAccount.DAL\sampleAccount.DAL.csproj" />
     <ProjectReference Include="..\sampleAccount\sampleAccount.csproj" />
   </ItemGroup>
 

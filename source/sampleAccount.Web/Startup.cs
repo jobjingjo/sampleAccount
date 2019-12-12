@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using sampleAccount.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using sampleAccount.Abstract;
+using sampleAccount.Services;
+using sampleAccount.DAL.Data;
+using sampleAccount.DAL;
 
 namespace sampleAccount.Web
 {
@@ -28,6 +27,7 @@ namespace sampleAccount.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -43,6 +43,17 @@ namespace sampleAccount.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddDbContext<DefaultContext>(opt =>
+
+            //        opt.UseInMemoryDatabase("Sample")
+            //        .UseLazyLoadingProxies()
+            //    );
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ISettingConfiguration, SettingConfiguration>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
