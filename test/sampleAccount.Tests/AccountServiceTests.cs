@@ -24,7 +24,7 @@ namespace sampleAccount.Tests
         public async Task GetIBAN()
         {
             var result = await _target.GetIBAN();
-            Assert.AreNotEqual(0,result);
+            Assert.AreNotEqual(string.Empty, result);
         }
     }
 }
