@@ -23,9 +23,6 @@ namespace sampleAccount.Services
 
             var innerHtml = await page.QuerySelectorAsync("#demo").EvaluateFunctionAsync<string>("node => node.innerHTML");
 
-            //var element = await page.QuerySelectorAsync("#demo");
-            //var innerHtml = await element.GetPropertyAsync("innerHTML").Result.JsonValueAsync<string>();
-
             return innerHtml;
         }
     }
