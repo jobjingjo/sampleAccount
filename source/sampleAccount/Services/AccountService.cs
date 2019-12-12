@@ -10,7 +10,7 @@ namespace sampleAccount.Services
     {
         public async Task<string> GetIBAN()
         {
-            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
             var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
                 Headless = true
