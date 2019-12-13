@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace sampleAccount.Web
 {
-    public class SettingConfiguration : ISettingConfiguration
+    public class SettingConfiguration 
     {
-        public decimal DepositFeeInPercent => throw new NotImplementedException();
+        public decimal DepositFeeInPercent { get; set; }
     }
 }

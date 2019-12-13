@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 
@@ -9,12 +10,9 @@ namespace sampleAccount.Services
     public class TransactionService : ITransactionService
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly ISettingConfiguration _settingConfiguration;
 
-        public TransactionService(IAccountRepository accountRepository,
-            ISettingConfiguration settingConfiguration) {
+        public TransactionService(IAccountRepository accountRepository) {
             _accountRepository = accountRepository ?? throw new System.ArgumentNullException(nameof(accountRepository));
-            _settingConfiguration = settingConfiguration ?? throw new System.ArgumentNullException(nameof(settingConfiguration));
         }
 
         public OperationResult Balance(string accountName)
@@ -32,7 +30,7 @@ namespace sampleAccount.Services
 
             return result;
         }
-        public OperationResult Withdraw(AccountTransaction accountTransaction)
+        public async Task<OperationResult> WithdrawAsync(AccountTransaction accountTransaction)
         {
             OperationResult result = new OperationResult();
             var accountName = accountTransaction.AccountName;
@@ -48,7 +46,7 @@ namespace sampleAccount.Services
                 {
                     result.Status = OperationStatus.Ok;
                     account.Balance -= accountTransaction.Amount;
-                    _accountRepository.UpdateTransactionAsync(account, accountTransaction);
+                    await _accountRepository.UpdateTransactionAsync(account, accountTransaction);
                     result.Balance = account.Balance;
                 }
                 else {
@@ -57,7 +55,7 @@ namespace sampleAccount.Services
             }
             return result;
         }
-        public OperationResult Deposit(AccountTransaction accountTransaction)
+        public async Task<OperationResult> DepositAsync(AccountTransaction accountTransaction, decimal fee)
         {
             OperationResult result = new OperationResult();
             var accountName = accountTransaction.AccountName;
@@ -69,12 +67,11 @@ namespace sampleAccount.Services
             else
             {
                 result.Balance = account.Balance;
-                var fee = (_settingConfiguration.DepositFeeInPercent * accountTransaction.Amount) / 100;
                 result.Status = OperationStatus.Ok;
                 accountTransaction.Amount -= fee;
                 account.Balance += accountTransaction.Amount;
-                _accountRepository.UpdateTransactionAsync(account, accountTransaction);
-                if (fee > 0) _accountRepository.CollectFeeAsync(account, fee);
+                await _accountRepository.UpdateTransactionAsync(account, accountTransaction);
+                if (fee > 0) await _accountRepository.CollectFeeAsync(account, fee);
                 result.Balance = account.Balance;
             }
             return result;

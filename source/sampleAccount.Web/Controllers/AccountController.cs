@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
@@ -15,21 +16,30 @@ namespace sampleAccount.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IOptions<SettingConfiguration> _config;
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
         public AccountController(
+            IOptions<SettingConfiguration> config,
             IAccountService accountService,
             ITransactionService transactionService,
             IMapper mapper) {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
             _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
+
+        public string CurrentUserName
+        {
+            get { return HttpContext.User.Identity.Name; }
+        }
+
         public IActionResult Index()
         {
-            var account =_accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            var account =_accountService.GetAccountByUserName(CurrentUserName);
             ViewData["Balance"] = account.Balance;
             ViewData["IBAN"] = account.AccountName;
             return View();
@@ -37,7 +47,7 @@ namespace sampleAccount.Web.Controllers
 
         public async Task<IActionResult> CreateAsync()
         {
-            var account = _accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             if (account!=null)
             {
                 return RedirectToAction("Index", "Account");
@@ -46,7 +56,7 @@ namespace sampleAccount.Web.Controllers
             account.AccountName = await _accountService.GetIBAN();
             account.Owner = HttpContext.User.Identity.Name;
             account = await _accountService.CreateAccountAsync(account);
-            return View(account);
+            return View("Create", account);
         }
 
         public async Task<IActionResult> TransactionAsync(
@@ -110,11 +120,16 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Deposit([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Deposit([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Deposit;
-            var result = _transactionService.Deposit(accountTransaction);
+
+            var fee = _config.Value.DepositFeeInPercent * accountTransaction.Amount / 100;
+
+            var result = await _transactionService.DepositAsync(accountTransaction, fee);
             if (result.Status == OperationStatus.Ok)
             {
                 return Ok(result.Balance);
@@ -130,11 +145,14 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Withdraw([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Withdraw([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Withdraw;
-            var result = _transactionService.Withdraw(accountTransaction);
+
+            var result = await _transactionService.WithdrawAsync(accountTransaction);
             if (result.Status == OperationStatus.Ok)
             {
                 return Ok(result.Balance);
@@ -151,23 +169,28 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Transfer([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Transfer([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransactionFrom = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransactionFrom.AccountName = account.AccountName;
             accountTransactionFrom.Type = TransactionType.Withdraw;
-            var result = _transactionService.Withdraw(accountTransactionFrom);
+
+            var result = await _transactionService.WithdrawAsync(accountTransactionFrom);
             if (result.Status != OperationStatus.Ok)
             {
                 return BadRequest();           
             }
 
             var accountTransactionTo = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransactionTo.AccountName = transactionModel.TargetAccountNumber;
             accountTransactionTo.Type = TransactionType.Deposit;
-            result = _transactionService.Deposit(accountTransactionTo);
+            result = await _transactionService.DepositAsync(accountTransactionTo, 0);
             if (result.Status != OperationStatus.Ok)
             {
                 //return money
-                _transactionService.Deposit(accountTransactionTo);
+                accountTransactionTo.AccountName = account.AccountName;
+                await _transactionService.DepositAsync(accountTransactionTo, 0);
                 return BadRequest();
             }
             else {

@@ -17,9 +17,13 @@ namespace sampleAccount.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -52,7 +56,7 @@ namespace sampleAccount.Web
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<ISettingConfiguration, SettingConfiguration>();
+            services.Configure<SettingConfiguration>(Configuration.GetSection("SettingConfiguration"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

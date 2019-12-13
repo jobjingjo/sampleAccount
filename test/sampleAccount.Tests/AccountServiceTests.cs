@@ -17,7 +17,7 @@ namespace sampleAccount.Tests
         [TestInitialize]
         public void Setup()
         {
-            _target = new AccountService();
+            _target = new AccountService(Mock.Of<IAccountRepository>());
         }
 
         [TestMethod]
