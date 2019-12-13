@@ -47,5 +47,15 @@ namespace sampleAccount.Services
             await page.CloseAsync();
             return innerHtml;
         }
+
+        public async Task<int> CountTransactionByAccountNameAsync(string accountName)
+        {
+            return await _accountRepository.CountTransactionByAccountAsync(accountName);       
+        }
+
+        public async Task<IList<AccountTransaction>> GetTransactionByAccountNameAsync(string accountName, Pagination pagination)
+        {
+            return  await _accountRepository.FindTransactionByAccountAsync(accountName, pagination);
+        }
     }
 }

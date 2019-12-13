@@ -12,5 +12,7 @@ namespace sampleAccount.Abstract
         Task<Account> CreateAccountAsync(Account account);
         Account GetAccountByNumber(string accountNumber);
         Account GetAccountByUserName(string name);
+        Task<int> CountTransactionByAccountNameAsync(string accountName);
+        Task<IList<AccountTransaction>> GetTransactionByAccountNameAsync(string accountName, Pagination pagination);
     }
 }
