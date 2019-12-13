@@ -171,8 +171,11 @@ namespace sampleAccount.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Transfer([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransactionFrom = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransactionFrom.AccountName = account.AccountName;
             accountTransactionFrom.Type = TransactionType.Withdraw;
+
             var result = await _transactionService.WithdrawAsync(accountTransactionFrom);
             if (result.Status != OperationStatus.Ok)
             {
@@ -180,11 +183,13 @@ namespace sampleAccount.Web.Controllers
             }
 
             var accountTransactionTo = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransactionTo.AccountName = transactionModel.TargetAccountNumber;
             accountTransactionTo.Type = TransactionType.Deposit;
             result = await _transactionService.DepositAsync(accountTransactionTo, 0);
             if (result.Status != OperationStatus.Ok)
             {
                 //return money
+                accountTransactionTo.AccountName = account.AccountName;
                 await _transactionService.DepositAsync(accountTransactionTo, 0);
                 return BadRequest();
             }
