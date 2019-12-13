@@ -2,27 +2,49 @@
     ViewData["Title"] = "Account Transfer";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Transfer</h1>
-    <form>
-        <div class="input-group  mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="addon-wrapping">@@</span>
+    <div class="text-center" ng-app="myApp" ng-controller="myCtrl">
+        <h1 class="display-4">Transfer</h1>
+        <form>
+            <div class="input-group  mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">@@</span>
+                </div>
+                <input type="text" class="form-control" ng-model="accountName" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
             </div>
-            <input type="text" class="form-control" ng-model="accountName" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control" ng-model="amount" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                    <span class="input-group-text">.00</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="doTransfer()">Submit</button>
+        </form>
+
+        <div id="overlay"></div>
+        <!-- Flexbox container for aligning the toasts -->
+        <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+
+            <!-- Then put toasts within -->
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                        <rect fill="#007aff" width="100%" height="100%"></rect>
+                    </svg>
+                    <strong class="mr-auto">Bootstrap</strong>
+                    <small>just now</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Current balance is {{balance}}
+                </div>
+            </div>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
-            </div>
-            <input type="text" class="form-control" ng-model="amount" aria-label="Amount (to the nearest dollar)">
-            <div class="input-group-append">
-                <span class="input-group-text">.00</span>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+    </div>
 
 @section Scripts
 {
