@@ -46,7 +46,7 @@ namespace sampleAccount.Web.Controllers
             account.AccountName = await _accountService.GetIBAN();
             account.Owner = HttpContext.User.Identity.Name;
             account = await _accountService.CreateAccountAsync(account);
-            return View(account);
+            return View("Create", account);
         }
 
         public async Task<IActionResult> TransactionAsync(

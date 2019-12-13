@@ -12,7 +12,11 @@ namespace sampleAccount.DAL
     {
         public AutoMapping()
         {
-            CreateMap<Account, AccountEntity>();
+            CreateMap<Account, AccountEntity>()
+                .ForMember(x=>x.Balance,o=>o.MapFrom(x=>x.Balance))
+                .ForMember(x => x.OwenerId, o => o.MapFrom(x => x.Owner))
+                .ForMember(x => x.IBAN, o => o.MapFrom(x => x.AccountName))
+                .ReverseMap();
                 //.ForMember(x => x.ModelCount, o => o.MapFrom(x => x.Models.Count()));
         }
 
