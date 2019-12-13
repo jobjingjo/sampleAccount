@@ -16,15 +16,17 @@ namespace sampleAccount.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        //private readonly IOptions<ISettingConfiguration> config;
+        private readonly IOptions<SettingConfiguration> _config;
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
 
         public AccountController(
+            IOptions<SettingConfiguration> config,
             IAccountService accountService,
             ITransactionService transactionService,
             IMapper mapper) {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
             _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -124,7 +126,10 @@ namespace sampleAccount.Web.Controllers
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Deposit;
-            var result = await _transactionService.DepositAsync(accountTransaction);
+
+            var fee = _config.Value.DepositFeeInPercent * accountTransaction.Amount / 100;
+
+            var result = await _transactionService.DepositAsync(accountTransaction, fee);
             if (result.Status == OperationStatus.Ok)
             {
                 return Ok(result.Balance);
@@ -173,11 +178,11 @@ namespace sampleAccount.Web.Controllers
 
             var accountTransactionTo = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransactionTo.Type = TransactionType.Deposit;
-            result = await _transactionService.DepositAsync(accountTransactionTo);
+            result = await _transactionService.DepositAsync(accountTransactionTo, 0);
             if (result.Status != OperationStatus.Ok)
             {
                 //return money
-                _transactionService.DepositAsync(accountTransactionTo);
+                await _transactionService.DepositAsync(accountTransactionTo, 0);
                 return BadRequest();
             }
             else {

@@ -11,6 +11,6 @@ namespace sampleAccount.Abstract
         OperationResult Balance(string accountName);
         Task<OperationResult> WithdrawAsync(AccountTransaction accountTransaction);
 
-        Task<OperationResult> DepositAsync(AccountTransaction accountTransaction);
+        Task<OperationResult> DepositAsync(AccountTransaction accountTransaction, decimal fee);
     }
 }
