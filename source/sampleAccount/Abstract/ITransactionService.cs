@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using sampleAccount.Models;
 
 namespace sampleAccount.Abstract
@@ -8,8 +9,8 @@ namespace sampleAccount.Abstract
     public interface ITransactionService
     {
         OperationResult Balance(string accountName);
-        OperationResult Withdraw(AccountTransaction accountTransaction);
+        Task<OperationResult> WithdrawAsync(AccountTransaction accountTransaction);
 
-        OperationResult Deposit(AccountTransaction accountTransaction);
+        Task<OperationResult> DepositAsync(AccountTransaction accountTransaction);
     }
 }

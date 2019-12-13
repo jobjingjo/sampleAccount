@@ -67,7 +67,7 @@ namespace sampleAccount.Tests
                 .Returns(()=>null);
 
             //Act
-            var result = _target.Deposit(accountTransaction);
+            var result = _target.DepositAsync(accountTransaction);
 
             //Assert
             Assert.AreEqual(OperationStatus.AccountNotFound, result.Status);
@@ -93,7 +93,7 @@ namespace sampleAccount.Tests
             _accountRepositoryMock.Setup(x => x.CollectFeeAsync(account, It.IsAny<decimal>()));
 
             //Act
-            var result = _target.Deposit(accountTransaction);
+            var result = _target.DepositAsync(accountTransaction);
 
             //Assert
             Assert.AreEqual(999, result.Balance);
@@ -113,7 +113,7 @@ namespace sampleAccount.Tests
                 .Returns(()=>null);
 
             //Act
-            var result = _target.Withdraw(accountTransaction);
+            var result = _target.WithdrawAsync(accountTransaction);
 
             //Assert
             Assert.AreEqual(OperationStatus.AccountNotFound, result.Status);
@@ -138,7 +138,7 @@ namespace sampleAccount.Tests
             _accountRepositoryMock.Setup(x => x.UpdateTransactionAsync(account, accountTransaction));
 
             //Act
-            var result = _target.Withdraw(accountTransaction);
+            var result = _target.WithdrawAsync(accountTransaction);
 
             //Assert
             Assert.AreEqual(0, result.Balance);
@@ -162,7 +162,7 @@ namespace sampleAccount.Tests
                 .Returns(account);
 
             //Act
-            var result = _target.Withdraw(accountTransaction);
+            var result = _target.WithdrawAsync(accountTransaction);
 
             //Assert
             Assert.AreEqual(OperationStatus.NotEnoughMoney, result.Status);

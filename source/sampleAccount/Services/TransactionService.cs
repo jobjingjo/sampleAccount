@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 
@@ -32,7 +33,7 @@ namespace sampleAccount.Services
 
             return result;
         }
-        public OperationResult Withdraw(AccountTransaction accountTransaction)
+        public async Task<OperationResult> WithdrawAsync(AccountTransaction accountTransaction)
         {
             OperationResult result = new OperationResult();
             var accountName = accountTransaction.AccountName;
@@ -48,7 +49,7 @@ namespace sampleAccount.Services
                 {
                     result.Status = OperationStatus.Ok;
                     account.Balance -= accountTransaction.Amount;
-                    _accountRepository.UpdateTransactionAsync(account, accountTransaction);
+                    await _accountRepository.UpdateTransactionAsync(account, accountTransaction);
                     result.Balance = account.Balance;
                 }
                 else {
@@ -57,7 +58,7 @@ namespace sampleAccount.Services
             }
             return result;
         }
-        public OperationResult Deposit(AccountTransaction accountTransaction)
+        public async Task<OperationResult> DepositAsync(AccountTransaction accountTransaction)
         {
             OperationResult result = new OperationResult();
             var accountName = accountTransaction.AccountName;
@@ -73,8 +74,8 @@ namespace sampleAccount.Services
                 result.Status = OperationStatus.Ok;
                 accountTransaction.Amount -= fee;
                 account.Balance += accountTransaction.Amount;
-                _accountRepository.UpdateTransactionAsync(account, accountTransaction);
-                if (fee > 0) _accountRepository.CollectFeeAsync(account, fee);
+                await _accountRepository.UpdateTransactionAsync(account, accountTransaction);
+                if (fee > 0) await _accountRepository.CollectFeeAsync(account, fee);
                 result.Balance = account.Balance;
             }
             return result;

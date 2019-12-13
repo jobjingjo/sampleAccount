@@ -116,13 +116,13 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Deposit([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Deposit([FromBody] TransactionModel transactionModel)
         {
             var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Deposit;
-            var result = _transactionService.Deposit(accountTransaction);
+            var result = await _transactionService.DepositAsync(accountTransaction);
             if (result.Status == OperationStatus.Ok)
             {
                 return Ok(result.Balance);
@@ -138,11 +138,11 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Withdraw([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Withdraw([FromBody] TransactionModel transactionModel)
         {
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransaction.Type = TransactionType.Withdraw;
-            var result = _transactionService.Withdraw(accountTransaction);
+            var result = await _transactionService.WithdrawAsync(accountTransaction);
             if (result.Status == OperationStatus.Ok)
             {
                 return Ok(result.Balance);
@@ -159,11 +159,11 @@ namespace sampleAccount.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Transfer([FromBody] TransactionModel transactionModel)
+        public async Task<IActionResult> Transfer([FromBody] TransactionModel transactionModel)
         {
             var accountTransactionFrom = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransactionFrom.Type = TransactionType.Withdraw;
-            var result = _transactionService.Withdraw(accountTransactionFrom);
+            var result = await _transactionService.WithdrawAsync(accountTransactionFrom);
             if (result.Status != OperationStatus.Ok)
             {
                 return BadRequest();           
@@ -171,11 +171,11 @@ namespace sampleAccount.Web.Controllers
 
             var accountTransactionTo = _mapper.Map<AccountTransaction>(transactionModel);
             accountTransactionTo.Type = TransactionType.Deposit;
-            result = _transactionService.Deposit(accountTransactionTo);
+            result = await _transactionService.DepositAsync(accountTransactionTo);
             if (result.Status != OperationStatus.Ok)
             {
                 //return money
-                _transactionService.Deposit(accountTransactionTo);
+                _transactionService.DepositAsync(accountTransactionTo);
                 return BadRequest();
             }
             else {
