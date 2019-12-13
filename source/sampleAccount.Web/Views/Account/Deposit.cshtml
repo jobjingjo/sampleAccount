@@ -28,8 +28,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script>
         var app = angular.module('myApp', []);
-
-        controller1 = function($scope, $http, $q) {
+        
+        controller1 = function($scope, $http, $q, $window) {
             $scope.firstName = "John";
             $scope.lastName = "Doe";
 
@@ -41,6 +41,7 @@
             $scope.doDeposit = function() {
                 $scope.deposit().then(x => {
                     console.log(x);
+                    $window.location.href ='https://localhost:44318/Account/Index';
                 }).catch(err => {
                     console.log(err);
                 });
@@ -66,8 +67,7 @@
 
             }
         }
-
-        controller1.$inject = ['$scope', '$http', '$q'];
+        controller1.$inject = ['$scope', '$http', '$q','$window'];
         app.controller('myCtrl', controller1);
     </script>
 
