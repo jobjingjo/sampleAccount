@@ -40,9 +40,9 @@
 
             $scope.doDeposit = function() {
                 $scope.deposit().then(x => {
-
+                    console.log(x);
                 }).catch(err => {
-
+                    console.log(err);
                 });
             }
 
@@ -51,11 +51,15 @@
 
                 $http.post("./Deposit", { Amount: $scope.amount })
                     .then(function(response) {
-                            //$scope.myWelcome = response.data;
-                            deferred.resolve('Hello, ' + name + '!');
+
+                            if (response.status == 200) {
+                                deferred.resolve(response.data);
+                            } else {
+                                deferred.reject(response);
+                            }
                         },
                         function myError(response) {
-                            deferred.reject('Greeting ' + name + ' is not allowed.');
+                            deferred.reject(response);
                         });
 
                 return deferred.promise;

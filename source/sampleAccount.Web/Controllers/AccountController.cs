@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
@@ -15,6 +16,7 @@ namespace sampleAccount.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //private readonly IOptions<ISettingConfiguration> config;
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
         private readonly IMapper _mapper;
