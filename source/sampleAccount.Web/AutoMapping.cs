@@ -22,8 +22,16 @@ namespace sampleAccount.Web
             CreateMap<TransactionModel, AccountTransaction>()
                 .ForMember(x => x.Amount, o => o.MapFrom(x => x.Amount))
                 .ForMember(x => x.AccountName, o => o.MapFrom(x => x.TargetAccountNumber))
+                .ForMember(x => x.Type, o => o.MapFrom(x => x.Type))
                 .ReverseMap();
-            
+
+
+            CreateMap<TransactionEntity, AccountTransaction>()
+                .ForMember(x => x.AccountName, o => o.MapFrom(x => x.From.IBAN))
+                .ForMember(x => x.Amount, o => o.MapFrom(x => x.Amount))
+                .ForMember(x => x.Type, o => o.MapFrom(x => x.Type))
+                .ReverseMap();
+
         }
 
     }

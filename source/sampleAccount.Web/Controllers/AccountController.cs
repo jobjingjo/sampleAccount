@@ -59,15 +59,12 @@ namespace sampleAccount.Web.Controllers
             return View("Create", account);
         }
 
-        public async Task<IActionResult> TransactionAsync(
+        public async Task<IActionResult> Transactions(
             string sortOrder,
             string currentFilter,
             string searchString,
             int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
@@ -77,35 +74,18 @@ namespace sampleAccount.Web.Controllers
             {
                 searchString = currentFilter;
             }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            //var students = from s in _context.Students
-            //               select s;
-            //if (!String.IsNullOrEmpty(searchString))
-            //{
-            //    students = students.Where(s => s.LastName.Contains(searchString)
-            //                           || s.FirstMidName.Contains(searchString));
-            //}
-            //switch (sortOrder)
-            //{
-            //    case "name_desc":
-            //        students = students.OrderByDescending(s => s.LastName);
-            //        break;
-            //    case "Date":
-            //        students = students.OrderBy(s => s.EnrollmentDate);
-            //        break;
-            //    case "date_desc":
-            //        students = students.OrderByDescending(s => s.EnrollmentDate);
-            //        break;
-            //    default:
-            //        students = students.OrderBy(s => s.LastName);
-            //        break;
-            //}
-            List<TransactionModel> items = new List<TransactionModel>();
             int pageSize = 3;
-            //return View(await PaginatedList<TransactionModel>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
-            return View(await PaginatedList<TransactionModel>.CreateAsync(items.AsQueryable(), pageNumber ?? 1, pageSize));
+
+            List<TransactionModel> items = new List<TransactionModel>();
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
+            if (account == null)
+            {                
+                return Ok(new PaginatedList<TransactionModel>(items, 0, pageNumber ?? 1, pageSize));
+            }
+            var count = await _accountService.CountTransactionByAccountNameAsync(account.AccountName);
+            var result = await _accountService.GetTransactionByAccountNameAsync(account.AccountName, new Pagination(pageNumber ?? 1, pageSize));         
+            items = _mapper.Map<IList<AccountTransaction>, List<TransactionModel>>(result);
+            return Ok(new PaginatedList<TransactionModel>(items, count, pageNumber ?? 1, pageSize));
         }
 
         public IActionResult Balance(string accountNumber)
