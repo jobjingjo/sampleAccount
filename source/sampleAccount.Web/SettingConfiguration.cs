@@ -8,6 +8,6 @@ namespace sampleAccount.Web
 {
     public class SettingConfiguration : ISettingConfiguration
     {
-        public decimal DepositFeeInPercent => throw new NotImplementedException();
+        public decimal DepositFeeInPercent { get; set; }
     }
 }

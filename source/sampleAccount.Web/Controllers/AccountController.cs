@@ -27,9 +27,15 @@ namespace sampleAccount.Web.Controllers
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
+
+        public string CurrentUserName
+        {
+            get { return HttpContext.User.Identity.Name; }
+        }
+
         public IActionResult Index()
         {
-            var account =_accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            var account =_accountService.GetAccountByUserName(CurrentUserName);
             ViewData["Balance"] = account.Balance;
             ViewData["IBAN"] = account.AccountName;
             return View();
@@ -37,7 +43,7 @@ namespace sampleAccount.Web.Controllers
 
         public async Task<IActionResult> CreateAsync()
         {
-            var account = _accountService.GetAccountByUserName(HttpContext.User.Identity.Name);
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             if (account!=null)
             {
                 return RedirectToAction("Index", "Account");
@@ -112,7 +118,9 @@ namespace sampleAccount.Web.Controllers
         [HttpPost]
         public IActionResult Deposit([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Deposit;
             var result = _transactionService.Deposit(accountTransaction);
             if (result.Status == OperationStatus.Ok)
