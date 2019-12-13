@@ -147,8 +147,11 @@ namespace sampleAccount.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Withdraw([FromBody] TransactionModel transactionModel)
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             var accountTransaction = _mapper.Map<AccountTransaction>(transactionModel);
+            accountTransaction.AccountName = account.AccountName;
             accountTransaction.Type = TransactionType.Withdraw;
+
             var result = await _transactionService.WithdrawAsync(accountTransaction);
             if (result.Status == OperationStatus.Ok)
             {
