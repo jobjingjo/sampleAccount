@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sampleAccount.DAL", "source
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sampleAccount.DAL.Tests", "test\sampleAccount.DAL.Tests\sampleAccount.DAL.Tests.csproj", "{0947B4FF-1776-4F99-BA14-8818CA2E2810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sampleAccount.Web", "source\sampleAccount.Web\sampleAccount.Web.csproj", "{575E6FDD-10E1-46C5-A7AC-1E5F7CC7F766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sampleAccount.Web", "source\sampleAccount.Web\sampleAccount.Web.csproj", "{575E6FDD-10E1-46C5-A7AC-1E5F7CC7F766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sampleAccount.TestHelpers", "test\sampleAccount.TestHelpers\sampleAccount.TestHelpers.csproj", "{5E0BEE28-B960-4154-A0CB-B5481A2924D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{575E6FDD-10E1-46C5-A7AC-1E5F7CC7F766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{575E6FDD-10E1-46C5-A7AC-1E5F7CC7F766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{575E6FDD-10E1-46C5-A7AC-1E5F7CC7F766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E0BEE28-B960-4154-A0CB-B5481A2924D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E0BEE28-B960-4154-A0CB-B5481A2924D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E0BEE28-B960-4154-A0CB-B5481A2924D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E0BEE28-B960-4154-A0CB-B5481A2924D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9944646B-1671-4160-B2B9-C22F56C199C4} = {9EE04549-6CB8-48C0-984A-82782684AE67}
 		{0947B4FF-1776-4F99-BA14-8818CA2E2810} = {9EE04549-6CB8-48C0-984A-82782684AE67}
+		{5E0BEE28-B960-4154-A0CB-B5481A2924D1} = {9EE04549-6CB8-48C0-984A-82782684AE67}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9316BAFA-6832-4656-8782-AB60ABB56167}
