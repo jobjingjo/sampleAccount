@@ -2,7 +2,7 @@
     ViewData["Title"] = "Account Transfer";
 }
 
-    <div class="text-center" ng-controller="myCtrl">
+    <div class="text-center" ng-controller="transferController">
         <h1 class="display-4">Transfer</h1>
         <form>
             <div class="input-group  mb-3">
@@ -23,50 +23,3 @@
             <button type="submit" class="btn btn-primary" ng-click="doTransfer()">Submit</button>
         </form>
     </div>
-
-@section Scripts
-{    
-    <script>
-        var app = angular.module('myApp', []);
-
-        controller1 = function($scope, $http, $q, $window, $timeout) {
-
-            $scope.doTransfer = function() {
-                $scope.transfer().then(x => {
-                    $scope.balance = x;
-                    console.log(x);
-                    //$("#overlay").show();
-                    $('.toast').toast('show');
-
-                    $timeout(function() { $window.location.href = 'https://localhost:44318/Account/Index'; }, 1000);
-
-                }).catch(err => {
-                    console.log(err);
-                });
-            }
-
-            $scope.transfer = function() {
-                var deferred = $q.defer();
-
-                $http.post("./Transfer", { Amount: $scope.amount, TargetAccountNumber : $scope.accountName })
-                    .then(function(response) {
-
-                            if (response.status == 200) {
-                                deferred.resolve(response.data);
-                            } else {
-                                deferred.reject(response);
-                            }
-                        },
-                        function myError(response) {
-                            deferred.reject(response);
-                        });
-
-                return deferred.promise;
-
-            }
-        }
-        controller1.$inject = ['$scope', '$http', '$q', '$window', '$timeout'];
-        app.controller('myCtrl', controller1);
-    </script>
-
-}

@@ -17,7 +17,7 @@
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
     </li>
 </ul>
-<div class="text-center" ng-controller="myCtrl">
+<div class="text-center" ng-controller="accountController">
     <h1 class="display-4">@accountNumber</h1>
     <h1 class="display-4">@balance</h1>
     <table class="table">
@@ -53,52 +53,3 @@
 
 </div>
 
-@section Scripts
-{
-    <script>
-        var app = angular.module('myApp', []);
-
-        controller1 = function($scope, $http, $q, $window, $timeout) {
-
-            $scope.doSearch = function (page) {
-                $("#overlay").show();
-                $scope.search(page).then(x => {
-                    console.log(x);
-                    $scope.items = x;
-                    $("#overlay").hide();
-                }).catch(err => {
-                     $scope.items = [];
-                    console.log(err);
-                    $("#overlay").hide();
-                });
-            }
-
-            $scope.search = function (page) {
-                var deferred = $q.defer();
-
-                $http.get("Account/Transactions", {
-                    params: { sortOrder: '', currentFilter: '', searchString: '', pageNumber: page }
-                })
-                    .then(function (response) {
-
-                        if (response.status == 200) {
-                            deferred.resolve(response.data);
-                        } else {
-                            deferred.reject(response);
-                        }
-                    },
-                        function myError(response) {
-                            deferred.reject(response);
-                        });
-
-                return deferred.promise;
-
-            }
-
-            $scope.doSearch();
-        }
-        controller1.$inject = ['$scope', '$http', '$q', '$window', '$timeout'];
-        app.controller('myCtrl', controller1);
-    </script>
-
-}

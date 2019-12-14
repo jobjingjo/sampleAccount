@@ -2,7 +2,7 @@
     ViewData["Title"] = "Account Deposit";
 }
 
-    <div class="text-center" ng-controller="myCtrl">
+    <div class="text-center" ng-controller="depositController">
         <h1 class="display-4">Account Deposit</h1>
 
         <form>
@@ -19,51 +19,3 @@
         </form>
 
     </div>
-
-@section Scripts
-{
-    
-    <script>
-        var app = angular.module('myApp', []);
-
-        controller1 = function($scope, $http, $q, $window, $timeout) {
-
-            $scope.doDeposit = function() {
-                $scope.deposit().then(x => {
-                    $scope.balance = x;
-                    console.log(x);
-                    //$("#overlay").show();
-                    $('.toast').toast('show');
-
-                    $timeout(function() { $window.location.href = 'https://localhost:44318/Account/Index'; }, 1000);
-
-                }).catch(err => {
-                    console.log(err);
-                });
-            }
-
-            $scope.deposit = function() {
-                var deferred = $q.defer();
-
-                $http.post("./Deposit", { Amount: $scope.amount })
-                    .then(function(response) {
-
-                            if (response.status == 200) {
-                                deferred.resolve(response.data);
-                            } else {
-                                deferred.reject(response);
-                            }
-                        },
-                        function myError(response) {
-                            deferred.reject(response);
-                        });
-
-                return deferred.promise;
-
-            }
-        }
-        controller1.$inject = ['$scope', '$http', '$q', '$window', '$timeout'];
-        app.controller('myCtrl', controller1);
-    </script>
-
-}
