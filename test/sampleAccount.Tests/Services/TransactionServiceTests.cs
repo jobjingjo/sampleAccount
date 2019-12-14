@@ -1,15 +1,15 @@
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using sampleAccount;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
-namespace sampleAccount.Tests
+using System.Threading.Tasks;
+
+namespace sampleAccount.Tests.Services
 {
     [TestClass]
     public class TransactionServiceTests
-    {        
+    {
         private TransactionService _target;
         private Mock<IAccountRepository> _accountRepositoryMock;
 
@@ -42,7 +42,7 @@ namespace sampleAccount.Tests
             //Arrange
             string accountName = "mockAccount1";
             _accountRepositoryMock.Setup(x => x.FindAccount(accountName))
-                    .Returns(()=>null);
+                    .Returns(() => null);
 
             //Act
             var result = _target.Balance(accountName);
@@ -62,10 +62,10 @@ namespace sampleAccount.Tests
                 Type = TransactionType.Deposit
             };
             _accountRepositoryMock.Setup(x => x.FindAccount(accountTransaction.AccountName))
-                .Returns(()=>null);
+                .Returns(() => null);
 
             //Act
-            var result =await _target.DepositAsync(accountTransaction,0);
+            var result = await _target.DepositAsync(accountTransaction, 0);
 
             //Assert
             Assert.AreEqual(OperationStatus.AccountNotFound, result.Status);
@@ -109,7 +109,7 @@ namespace sampleAccount.Tests
                 Type = TransactionType.Withdraw
             };
             _accountRepositoryMock.Setup(x => x.FindAccount(accountTransaction.AccountName))
-                .Returns(()=>null);
+                .Returns(() => null);
 
             //Act
             var result = await _target.WithdrawAsync(accountTransaction);
@@ -122,8 +122,9 @@ namespace sampleAccount.Tests
         public async Task Withdraw_WhenCalled_ShouldUpdateAndCollectFee()
         {
             //Arrange
-            Account account = new Account() {
-                Balance =1000
+            Account account = new Account()
+            {
+                Balance = 1000
             };
             AccountTransaction accountTransaction = new AccountTransaction()
             {

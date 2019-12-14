@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
 using sampleAccount.TestHelpers;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace sampleAccount.Tests
+namespace sampleAccount.Tests.Services
 {
     [TestClass]
     public class AccountServiceTests
@@ -29,9 +28,10 @@ namespace sampleAccount.Tests
             _target = _provider.GetRequiredService<AccountService>();
         }
 
-        [DataRow(1,DisplayName = "call with null of IAccountRepository")]
+        [DataRow(1, DisplayName = "call with null of IAccountRepository")]
         [TestMethod]
-        public void ConstructorTests(int caseNumber) {
+        public void ConstructorTests(int caseNumber)
+        {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
                 _target = new AccountService(
@@ -54,7 +54,7 @@ namespace sampleAccount.Tests
 
             //Assert
             _provider.GetMock<IAccountRepository>()
-                .Verify(x => x.CreateAccountAsync(account),Times.Once);
+                .Verify(x => x.CreateAccountAsync(account), Times.Once);
         }
 
         [TestMethod]
@@ -67,7 +67,7 @@ namespace sampleAccount.Tests
                 .Returns(new Account());
 
             //Act
-            var result =  _target.GetAccountByNumber(accountName);
+            var result = _target.GetAccountByNumber(accountName);
 
             //Assert
             _provider.GetMock<IAccountRepository>()
