@@ -31,10 +31,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in items">
-                <th scope="row">1</th>
+                <th scope="row">{{$index+1+(10*(pageIndex-1))}}</th>
                 <td>{{item.amount}}</td>
                 <td>{{item.targetAccountNumber}}</td>
-                <td>{{item.type}}</td>
+                <td>{{item.type | transactionType}}</td>
             </tr>
             <tr ng-if="!items || items.length ==0">
                 <td>no data</td>
@@ -43,9 +43,13 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex-1)" ng-if="hasPreviousPage">Previous</a></li>
+            <li class="page-item">
+                <a class="page-link" ng-click="doSearch(pageIndex-1)" ng-if="hasPreviousPage">Previous</a>
+            </li>
             <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex)">{{pageIndex}}/{{totalPages}}</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex+1)" ng-if="hasNextPage">Next</a></li>
+            <li class="page-item">
+                <a class="page-link" ng-click="doSearch(pageIndex+1)" ng-if="hasNextPage">Next</a>
+            </li>
         </ul>
     </nav>
 

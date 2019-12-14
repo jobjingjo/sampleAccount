@@ -10,6 +10,24 @@
 
 (function () {
     "use strict";
+
+    angular.module('myApp').filter('transactionType', function () {
+
+        return function (data) {
+            if (data === 0) {
+                return "Deposit";
+            }
+            if (data === 1) {
+                return "Withdraw";
+            }
+            return data;
+        }
+    });
+})();
+
+
+(function () {
+    "use strict";
     angular
         .module('myApp')
         .factory('accountService', accountService);
