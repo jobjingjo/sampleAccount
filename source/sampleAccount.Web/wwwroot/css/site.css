@@ -68,3 +68,21 @@ body {
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
 }
+
+input.ng-pristine {
+    background-color:yellow;
+}
+
+input.ng-touched.ng-invalid {
+    background-color: red;
+}
+
+input.ng-touched.ng-valid {
+    background-color: green;
+}
+
+.btn:disabled {
+    color: #808080;
+    background-color: #E9ECEF;
+    border-color: #808080;
+}

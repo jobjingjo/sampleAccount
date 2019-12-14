@@ -4,22 +4,19 @@
 
     <div class="text-center" ng-controller="transferController">
         <h1 class="display-4">Transfer</h1>
-        <form>
+        <form name="transfer">
             <div class="input-group  mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="addon-wrapping">@@</span>
-                </div>
-                <input type="text" class="form-control" ng-model="accountName" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                </div> 
+                <input type="text" class="form-control" ng-model="accountName" placeholder="AccountName" aria-label="AccountName" aria-describedby="addon-wrapping" required>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                 </div>
-                <input type="number" class="form-control" ng-model="amount" aria-label="Amount (to the nearest dollar)">
-                <div class="input-group-append">
-                    <span class="input-group-text">.00</span>
-                </div>
+                <input type="number" min="0" name="amount" class="form-control" ng-model="amount" aria-label="Amount (to transfer)" required>
             </div>
-            <button type="submit" class="btn btn-primary" ng-click="doTransfer()">Submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="doTransfer()" ng-disabled="transfer.$invalid">Submit</button>
         </form>
     </div>

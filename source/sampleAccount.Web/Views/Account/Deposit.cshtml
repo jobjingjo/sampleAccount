@@ -5,17 +5,14 @@
     <div class="text-center" ng-controller="depositController">
         <h1 class="display-4">Account Deposit</h1>
 
-        <form>
+        <form name="deposit">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                 </div>
-                <input type="number" ng-model="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
-                <div class="input-group-append">
-                    <span class="input-group-text">.00</span>
-                </div>
+                <input type="number" min="0" name="amount" ng-model="amount" class="form-control" aria-label="Amount (to deposit)" required>
             </div>
-            <button type="submit" class="btn btn-primary" ng-click="doDeposit()">Submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="doDeposit()" ng-disabled="deposit.amount.$invalid">Submit</button>
         </form>
 
     </div>

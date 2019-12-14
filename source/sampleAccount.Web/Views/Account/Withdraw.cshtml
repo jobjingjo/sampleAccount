@@ -5,17 +5,14 @@
 <div class="text-center" ng-controller="withdrawController">
     <h1 class="display-4">Account Withdraw</h1>
 
-    <form>
+    <form name="withdraw">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
             </div>
-            <input type="number" ng-model="amount" class="form-control" aria-label="Amount (to the nearest dollar)">
-            <div class="input-group-append">
-                <span class="input-group-text">.00</span>
-            </div>
+            <input type="number" min="0" name="amount" ng-model="amount" class="form-control" aria-label="Amount (to withdraw)" required>
         </div>
-        <button type="submit" class="btn btn-primary" ng-click="doWithdraw()">Submit</button>
+        <button type="submit" class="btn btn-primary" ng-click="doWithdraw()" ng-disabled="withdraw.amount.$invalid">Submit</button>
     </form>
 
 </div>
