@@ -19,16 +19,19 @@ namespace sampleAccount.Web.Controllers
         private readonly IOptions<SettingConfiguration> _config;
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
+        private readonly IExternalService _externalService;
         private readonly IMapper _mapper;
 
         public AccountController(
             IOptions<SettingConfiguration> config,
             IAccountService accountService,
             ITransactionService transactionService,
+            IExternalService externalService,
             IMapper mapper) {
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
+            _externalService = externalService ?? throw new ArgumentNullException(nameof(externalService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -53,7 +56,7 @@ namespace sampleAccount.Web.Controllers
                 return RedirectToAction("Index", "Account");
             }
             account = new Account();
-            account.AccountName = await _accountService.GetIBAN();
+            account.AccountName = await _externalService.GetIBAN();
             account.Owner = HttpContext.User.Identity.Name;
             account = await _accountService.CreateAccountAsync(account);
             return View("Create", account);
