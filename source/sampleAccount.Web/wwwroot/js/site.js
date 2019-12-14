@@ -188,7 +188,13 @@
             $("#overlay").show();
             accountService.search(page).then(x => {
                 console.log(x);
-                $scope.items = x;
+                $scope.items = x.result;
+
+                $scope.pageIndex = x.pageIndex;
+                $scope.totalPages = x.totalPages;
+                $scope.hasPreviousPage = x.hasPreviousPage;
+                $scope.hasNextPage = x.hasNextPage;
+
                 $("#overlay").hide();
             }).catch(err => {
                 $scope.items = [];

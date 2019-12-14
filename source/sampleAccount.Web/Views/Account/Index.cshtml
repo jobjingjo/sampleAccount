@@ -43,11 +43,9 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" ng-click="doSearch()">Previous</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(1)">1</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(2)">2</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(3)">3</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch()">Next</a></li>
+            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex-1)" ng-if="hasPreviousPage">Previous</a></li>
+            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex)">{{pageIndex}}/{{totalPages}}</a></li>
+            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex+1)" ng-if="hasNextPage">Next</a></li>
         </ul>
     </nav>
 

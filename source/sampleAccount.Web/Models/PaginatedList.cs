@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace sampleAccount.Web.Models
 {
-    public class PaginatedList<T> : List<T>
+    public class PaginatedList<T> 
     {
+        public List<T> result { get; private set; }
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
 
@@ -15,8 +16,8 @@ namespace sampleAccount.Web.Models
         {
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-
-            this.AddRange(items);
+            result = new List<T>();
+            result.AddRange(items);
         }
 
         public bool HasPreviousPage

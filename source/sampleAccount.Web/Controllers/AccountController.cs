@@ -77,7 +77,7 @@ namespace sampleAccount.Web.Controllers
             {
                 searchString = currentFilter;
             }
-            int pageSize = 3;
+            int pageSize = 10;
 
             List<TransactionModel> items = new List<TransactionModel>();
             var account = _accountService.GetAccountByUserName(CurrentUserName);
