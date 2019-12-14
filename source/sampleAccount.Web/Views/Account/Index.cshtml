@@ -32,7 +32,7 @@
         <tbody>
             <tr ng-repeat="item in items">
                 <th scope="row">{{$index+1+(10*(pageIndex-1))}}</th>
-                <td>{{item.amount}}</td>
+                <td>{{item.amount | number: 2}}</td>
                 <td>{{item.targetAccountNumber}}</td>
                 <td>{{item.type | transactionType}}</td>
             </tr>
