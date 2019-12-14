@@ -1,14 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Account Transfer";
+    var balance = ViewData["Balance"] ?? 0.0;
+    var accountNumber = ViewData["IBAN"] ?? "IBAN Account Number";
 }
 
     <div class="text-center" ng-controller="transferController">
+        <h1 class="display-4">@accountNumber</h1>
+        <h1 class="display-4">@balance</h1>
         <h1 class="display-4">Transfer</h1>
         <form name="transfer">
             <div class="input-group  mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="addon-wrapping">@@</span>
-                </div> 
+                </div>
                 <input type="text" class="form-control" ng-model="accountName" placeholder="AccountName" aria-label="AccountName" aria-describedby="addon-wrapping" required>
             </div>
             <div class="input-group mb-3">

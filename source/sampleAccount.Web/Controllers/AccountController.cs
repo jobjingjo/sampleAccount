@@ -99,6 +99,9 @@ namespace sampleAccount.Web.Controllers
 
         public IActionResult Deposit()
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
+            ViewData["Balance"] = account.Balance;
+            ViewData["IBAN"] = account.AccountName;
             return View();
         }
 
@@ -124,6 +127,9 @@ namespace sampleAccount.Web.Controllers
 
         public IActionResult Withdraw()
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
+            ViewData["Balance"] = account.Balance;
+            ViewData["IBAN"] = account.AccountName;
             return View();
         }
 
@@ -148,6 +154,9 @@ namespace sampleAccount.Web.Controllers
 
         public IActionResult Transfer()
         {
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
+            ViewData["Balance"] = account.Balance;
+            ViewData["IBAN"] = account.AccountName;
             return View();
         }
 

@@ -1,8 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Account Deposit";
+    var balance = ViewData["Balance"] ?? 0.0;
+    var accountNumber = ViewData["IBAN"] ?? "IBAN Account Number";
 }
 
     <div class="text-center" ng-controller="depositController">
+        <h1 class="display-4">@accountNumber</h1>
+        <h1 class="display-4">@balance</h1>
         <h1 class="display-4">Account Deposit</h1>
 
         <form name="deposit">
