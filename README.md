@@ -5,10 +5,15 @@
 a simple account web application
 
 ##Technologies
-C#
-angularjs
-.Net Core
-EntityFramework
-Puppeteer
-Moq
-MVC
+ - C#
+ - angularjs
+ - .Net Core
+ - EntityFramework
+ - Puppeteer
+ - Moq
+ - MVC
+ 
+##TODO
+ - Logging
+ - Fix test
+ - js test
