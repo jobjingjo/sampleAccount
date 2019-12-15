@@ -16,4 +16,4 @@ environment:
 after_test: 
     - dotnet test ./sampleAccount.sln --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     - C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe -f .\test\sampleAccount.Tests\coverage.opencover.xml -t 61930f7c-b924-4842-9463-04374733ed96
-	- C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe -f .\test\sampleAccount.DAL.Tests\coverage.opencover.xml -t 61930f7c-b924-4842-9463-04374733ed96
+    - C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe -f .\test\sampleAccount.DAL.Tests\coverage.opencover.xml -t 61930f7c-b924-4842-9463-04374733ed96
