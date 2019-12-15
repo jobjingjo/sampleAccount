@@ -4,5 +4,15 @@
 
 <div class="text-center">
     <h1 class="display-4">Create</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Account Create Successfully</p>
+    <p>@Html.ActionLink("View Account Click ", "Index", "Account")</p>
 </div>
+
+@section scripts{
+    <script>
+         setTimeout(function(){
+            window.location.href = '@Url.Action("Deposit", "Account")"';
+         }, 5000);
+    </script>
+
+}
