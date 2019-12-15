@@ -21,5 +21,11 @@ namespace sampleAccount.Tests.Services
             var result = await _target.GetIBAN();
             Assert.AreNotEqual(string.Empty, result);
         }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _target.Dispose();
+        }
     }
 }
