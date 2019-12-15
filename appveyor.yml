@@ -14,5 +14,5 @@ environment:
        secure: NtiIhRLgwfslYkeJik7FEWfk5pufsbT60
 
 after_test: 
-    - dotnet test ./sampleAccount.sln --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    - dotnet test ./sampleAccount.sln --no-build
     - C:\ProgramData\chocolatey\lib\codecov\tools\codecov.exe -f .\WebApplication.Services.Tests\coverage.opencover.xml -t 61930f7c-b924-4842-9463-04374733ed96
