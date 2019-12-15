@@ -17,3 +17,4 @@ a simple account web application
  - Add audit logging
  - Fix test coverage
  - Add js test
+ - Add web.controller test
