@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="myApp" >
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,6 +46,50 @@
             @RenderBody()
         </main>
     </div>
+    <div id="overlay">
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flexbox container for aligning the toasts -->
+    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+
+        <!-- Then put toasts within -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" ng-if="!$root.error">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect fill="#7aff00" width="100%" height="100%"></rect>
+                </svg>
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>just now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Current balance is {{$root.balance}}
+            </div>
+        </div>
+
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" ng-if="$root.error">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect fill="#fa0000" width="100%" height="100%"></rect>
+                </svg>
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>just now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                {{$root.errorMessage}}
+            </div>
+        </div>
+    </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -56,6 +100,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/angularjs/angular.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -69,6 +114,12 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"
+                asp-fallback-src="~/lib/angularjs/angular.min.js"
+                asp-fallback-test="window.angular"
+                crossorigin="anonymous"
+                integrity="sha256-7ngBGhPctUEyXLD6ha53TFUaqhBCnXFOi712aqBq094=">
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -13,11 +13,8 @@
     <li class="nav-item">
         <a class="nav-link" href="/Account/Transfer">Transfer</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-    </li>
 </ul>
-<div class="text-center" ng-app="myApp" ng-controller="myCtrl">
+<div class="text-center" ng-controller="accountController">
     <h1 class="display-4">@accountNumber</h1>
     <h1 class="display-4">@balance</h1>
     <table class="table">
@@ -31,10 +28,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in items">
-                <th scope="row">1</th>
-                <td>{{item.amount}}</td>
+                <th scope="row">{{$index+1+(10*(pageIndex-1))}}</th>
+                <td>{{item.amount | number: 2}}</td>
                 <td>{{item.targetAccountNumber}}</td>
-                <td>{{item.type}}</td>
+                <td>{{item.type | transactionType}}</td>
             </tr>
             <tr ng-if="!items || items.length ==0">
                 <td>no data</td>
@@ -43,85 +40,25 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" ng-click="doSearch()">Previous</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(1)">1</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(2)">2</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch(3)">3</a></li>
-            <li class="page-item"><a class="page-link" ng-click="doSearch()">Next</a></li>
+            <li class="page-item">
+                <a class="page-link" ng-if="!hasPreviousPage">First</a>
+                <a class="page-link" ng-if="hasPreviousPage" ng-click="doSearch(1)">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" ng-if="!hasPreviousPage">Previous</a>
+                <a class="page-link" ng-if="hasPreviousPage" ng-click="doSearch(pageIndex-1)">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" ng-click="doSearch(pageIndex)">{{pageIndex}}/{{totalPages}}</a></li>
+            <li class="page-item">
+                <a class="page-link" ng-if="!hasNextPage">Next</a>
+                <a class="page-link" ng-if="hasNextPage" ng-click="doSearch(pageIndex+1)">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" ng-if="!hasNextPage">Last</a>
+                <a class="page-link" ng-if="hasNextPage" ng-click="doSearch(totalPages)">Last</a>
+            </li>
         </ul>
     </nav>
 
-    <div id="overlay">
-        <div class="text-center">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
 </div>
 
-<style>
-    #overlay {
-        position: fixed; /* Sit on top of the page content */
-        display: none; /* Hidden by default */
-        width: 100%; /* Full width (cover the whole page) */
-        height: 100%; /* Full height (cover the whole page) */
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-        z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-        cursor: pointer; /* Add a pointer on hover */
-    }
-</style>
-@section Scripts
-{
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script>
-        var app = angular.module('myApp', []);
-
-        controller1 = function($scope, $http, $q, $window, $timeout) {
-
-            $scope.doSearch = function (page) {
-                $("#overlay").show();
-                $scope.search(page).then(x => {
-                    console.log(x);
-                    $scope.items = x;
-                    $("#overlay").hide();
-                }).catch(err => {
-                     $scope.items = [];
-                    console.log(err);
-                    $("#overlay").hide();
-                });
-            }
-
-            $scope.search = function (page) {
-                var deferred = $q.defer();
-
-                $http.get("Account/Transactions", {
-                    params: { sortOrder: '', currentFilter: '', searchString: '', pageNumber: page }
-                })
-                    .then(function (response) {
-
-                        if (response.status == 200) {
-                            deferred.resolve(response.data);
-                        } else {
-                            deferred.reject(response);
-                        }
-                    },
-                        function myError(response) {
-                            deferred.reject(response);
-                        });
-
-                return deferred.promise;
-
-            }
-
-            $scope.doSearch();
-        }
-        controller1.$inject = ['$scope', '$http', '$q', '$window', '$timeout'];
-        app.controller('myCtrl', controller1);
-    </script>
-
-}

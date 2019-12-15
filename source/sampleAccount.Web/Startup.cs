@@ -56,6 +56,7 @@ namespace sampleAccount.Web
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddSingleton<IExternalService, ExternalService>();
             services.Configure<SettingConfiguration>(Configuration.GetSection("SettingConfiguration"));
         }
 
