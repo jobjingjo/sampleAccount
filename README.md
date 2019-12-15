@@ -18,4 +18,3 @@ a simple account web application
  - Fix test coverage
  - Add js test
  - Add web.controller test
- - Update Branch Policy
