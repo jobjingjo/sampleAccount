@@ -15,6 +15,8 @@ a simple account web application
  
 ##TODO
  - Add audit logging
- - Fix test coverage
- - Add js test
- - Add web.controller test
+ - Improve test coverage
+ - Improve security
+ - Add integration tests
+ - Add js tests
+ - Add web.controller tests
