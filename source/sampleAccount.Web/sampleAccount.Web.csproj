@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>full</DebugType>
     <UserSecretsId>aspnet-sampleAccount.Web-B052601B-56FC-495E-998A-D1E8AAF4132D</UserSecretsId>
+	<IdentityUIFrameworkVersion>Bootstrap3</IdentityUIFrameworkVersion>
   </PropertyGroup>
 
 
@@ -12,16 +13,16 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
