@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	<UserSecretsId>aspnet-sampleAccount.DAL-B052601B-56FC-495E-998A-D1E8AAF4132D</UserSecretsId>
+    <UserSecretsId>aspnet-sampleAccount.DAL-B052601B-56FC-495E-998A-D1E8AAF4132D</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.8" />

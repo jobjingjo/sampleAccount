@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
 using sampleAccount.Abstract;
-using sampleAccount.Services;
-using sampleAccount.DAL.Data;
 using sampleAccount.DAL;
+using sampleAccount.DAL.Data;
+using sampleAccount.Services;
 
 namespace sampleAccount.Web
 {
@@ -20,7 +20,7 @@ namespace sampleAccount.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json", true, true);
 
             Configuration = builder.Build();
         }
@@ -47,9 +47,9 @@ namespace sampleAccount.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDbContext<DataDbContext>(options =>
-                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"))
-                 .UseLazyLoadingProxies());
+                options.UseSqlServer(
+                        Configuration.GetConnectionString("DefaultConnection"))
+                    .UseLazyLoadingProxies());
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITransactionService, TransactionService>();
@@ -83,8 +83,8 @@ namespace sampleAccount.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

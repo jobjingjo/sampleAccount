@@ -4,23 +4,23 @@
     var accountNumber = ViewData["IBAN"] ?? "IBAN Account Number";
 }
 
-    <div class="text-center" ng-controller="transferController">
-        <h1 class="display-4">@accountNumber</h1>
-        <h1 class="display-4">@balance</h1>
-        <h1 class="display-4">Transfer</h1>
-        <form name="transfer">
-            <div class="input-group  mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping">@@</span>
-                </div>
-                <input type="text" class="form-control" ng-model="accountName" placeholder="AccountName" aria-label="AccountName" aria-describedby="addon-wrapping" required>
+<div class="text-center" ng-controller="transferController">
+    <h1 class="display-4">@accountNumber</h1>
+    <h1 class="display-4">@balance</h1>
+    <h1 class="display-4">Transfer</h1>
+    <form name="transfer">
+        <div class="input-group  mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping">@@</span>
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">$</span>
-                </div>
-                <input type="number" min="0" step="0.01" name="amount" class="form-control text-right" placeholder="0.00" ng-model="amount" aria-label="Amount (to transfer)" required>
+            <input type="text" class="form-control" ng-model="accountName" placeholder="AccountName" aria-label="AccountName" aria-describedby="addon-wrapping" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
             </div>
-            <button type="submit" class="btn btn-primary" ng-click="doTransfer()" ng-disabled="transfer.$invalid">Submit</button>
-        </form>
-    </div>
+            <input type="number" min="0" step="0.01" name="amount" class="form-control text-right" placeholder="0.00" ng-model="amount" aria-label="Amount (to transfer)" required>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="doTransfer()" ng-disabled="transfer.$invalid">Submit</button>
+    </form>
+</div>

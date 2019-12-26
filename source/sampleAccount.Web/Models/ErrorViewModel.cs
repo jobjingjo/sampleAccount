@@ -1,5 +1,3 @@
-using System;
-
 namespace sampleAccount.Web.Models
 {
     public class ErrorViewModel

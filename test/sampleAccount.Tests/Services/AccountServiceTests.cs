@@ -1,20 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
 using sampleAccount.TestHelpers;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace sampleAccount.Tests.Services
 {
     [TestClass]
     public class AccountServiceTests
     {
-
         private IServiceProvider _provider;
         private AccountService _target;
 
@@ -36,7 +35,7 @@ namespace sampleAccount.Tests.Services
             {
                 _target = new AccountService(
                     caseNumber == 1 ? null : Mock.Of<IAccountRepository>()
-                   );
+                );
             });
         }
 
@@ -73,7 +72,6 @@ namespace sampleAccount.Tests.Services
             _provider.GetMock<IAccountRepository>()
                 .Verify(x => x.FindAccount(accountName), Times.Once);
         }
-
 
         [TestMethod]
         public void GetAccountByUserName_WhenCalled_ShouldCallRepository()
@@ -117,7 +115,7 @@ namespace sampleAccount.Tests.Services
             var accountName = "mockAccount";
             _provider.GetMock<IAccountRepository>()
                 .Setup(x => x.FindTransactionByAccountAsync(accountName, pagination))
-                .Returns(Task.FromResult((IList<AccountTransaction>)new List<AccountTransaction>()));
+                .Returns(Task.FromResult((IList<AccountTransaction>) new List<AccountTransaction>()));
 
             //Act
             var result = await _target.GetTransactionByAccountNameAsync(accountName, pagination);

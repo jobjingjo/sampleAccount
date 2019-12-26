@@ -1,8 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using sampleAccount.DAL.Data;
 using sampleAccount.Models;
 using sampleAccount.Web.Models;
@@ -25,14 +21,11 @@ namespace sampleAccount.Web
                 .ForMember(x => x.Type, o => o.MapFrom(x => x.Type))
                 .ReverseMap();
 
-
             CreateMap<TransactionEntity, AccountTransaction>()
                 .ForMember(x => x.AccountName, o => o.MapFrom(x => x.From.IBAN))
                 .ForMember(x => x.Amount, o => o.MapFrom(x => x.Amount))
                 .ForMember(x => x.Type, o => o.MapFrom(x => x.Type))
                 .ReverseMap();
-
         }
-
     }
 }
