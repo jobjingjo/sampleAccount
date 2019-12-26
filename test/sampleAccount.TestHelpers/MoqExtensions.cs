@@ -6,8 +6,13 @@ namespace sampleAccount.TestHelpers
 {
     public static class MoqExtensions
     {
+        public static IServiceCollection AddMock<T>(this IServiceCollection serviceCollection) where T : class
+        {
+            return serviceCollection.AddMock<T>(MockBehavior.Strict);
+        }
+
         public static IServiceCollection AddMock<T>(this IServiceCollection serviceCollection,
-            MockBehavior behavior = MockBehavior.Strict) where T : class
+            MockBehavior behavior) where T : class
         {
             var mock = new Mock<T>(behavior);
             serviceCollection.AddSingleton(mock);

@@ -52,9 +52,10 @@ namespace sampleAccount.Web.Controllers
                 return RedirectToAction("Index", "Account");
             }
 
-            account = new Account();
-            account.AccountName = await _externalService.GetIBAN();
-            account.Owner = HttpContext.User.Identity.Name;
+            account = new Account
+            {
+                AccountName = await _externalService.GetIBAN(), Owner = HttpContext.User.Identity.Name
+            };
             account = await _accountService.CreateAccountAsync(account);
             return View("Create", account);
         }
