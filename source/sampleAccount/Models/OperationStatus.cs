@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace sampleAccount.Models
+﻿namespace sampleAccount.Models
 {
     public enum OperationStatus
     {
         Ok = 0,
         Failed = 1,
         NotEnoughMoney = 200,
-        AccountNotFound = 400,
+        AccountNotFound = 400
     }
 }

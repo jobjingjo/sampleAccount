@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using sampleAccount.Services;
-using System.Threading.Tasks;
 
 namespace sampleAccount.Tests.Services
 {

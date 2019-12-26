@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
-using sampleAccount.Services;
 using sampleAccount.Web.Models;
 
 namespace sampleAccount.Web.Controllers
@@ -16,18 +14,19 @@ namespace sampleAccount.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IOptions<SettingConfiguration> _config;
         private readonly IAccountService _accountService;
-        private readonly ITransactionService _transactionService;
+        private readonly IOptions<SettingConfiguration> _config;
         private readonly IExternalService _externalService;
         private readonly IMapper _mapper;
+        private readonly ITransactionService _transactionService;
 
         public AccountController(
             IOptions<SettingConfiguration> config,
             IAccountService accountService,
             ITransactionService transactionService,
             IExternalService externalService,
-            IMapper mapper) {
+            IMapper mapper)
+        {
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
             _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
@@ -35,14 +34,11 @@ namespace sampleAccount.Web.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public string CurrentUserName
-        {
-            get { return HttpContext.User.Identity.Name; }
-        }
+        public string CurrentUserName => HttpContext.User.Identity.Name;
 
         public IActionResult Index()
         {
-            var account =_accountService.GetAccountByUserName(CurrentUserName);
+            var account = _accountService.GetAccountByUserName(CurrentUserName);
             ViewData["Balance"] = account.Balance;
             ViewData["IBAN"] = account.AccountName;
             return View();
@@ -51,10 +47,11 @@ namespace sampleAccount.Web.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             var account = _accountService.GetAccountByUserName(CurrentUserName);
-            if (account!=null)
+            if (account != null)
             {
                 return RedirectToAction("Index", "Account");
             }
+
             account = new Account();
             account.AccountName = await _externalService.GetIBAN();
             account.Owner = HttpContext.User.Identity.Name;
@@ -68,7 +65,6 @@ namespace sampleAccount.Web.Controllers
             string searchString,
             int? pageNumber)
         {
-
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -77,16 +73,19 @@ namespace sampleAccount.Web.Controllers
             {
                 searchString = currentFilter;
             }
-            int pageSize = 10;
 
-            List<TransactionModel> items = new List<TransactionModel>();
+            var pageSize = 10;
+
+            var items = new List<TransactionModel>();
             var account = _accountService.GetAccountByUserName(CurrentUserName);
             if (account == null)
-            {                
+            {
                 return Ok(new PaginatedList<TransactionModel>(items, 0, pageNumber ?? 1, pageSize));
             }
+
             var count = await _accountService.CountTransactionByAccountNameAsync(account.AccountName);
-            var result = await _accountService.GetTransactionByAccountNameAsync(account.AccountName, new Pagination(pageNumber ?? 1, pageSize));         
+            var result = await _accountService.GetTransactionByAccountNameAsync(account.AccountName,
+                new Pagination(pageNumber ?? 1, pageSize));
             items = _mapper.Map<IList<AccountTransaction>, List<TransactionModel>>(result);
             return Ok(new PaginatedList<TransactionModel>(items, count, pageNumber ?? 1, pageSize));
         }
@@ -120,9 +119,8 @@ namespace sampleAccount.Web.Controllers
             {
                 return Ok(result.Balance);
             }
-            else {
-                return BadRequest();
-            }
+
+            return BadRequest();
         }
 
         public IActionResult Withdraw()
@@ -146,10 +144,8 @@ namespace sampleAccount.Web.Controllers
             {
                 return Ok(result.Balance);
             }
-            else
-            {
-                return BadRequest();
-            }
+
+            return BadRequest();
         }
 
         public IActionResult Transfer()
@@ -171,7 +167,7 @@ namespace sampleAccount.Web.Controllers
             var result = await _transactionService.WithdrawAsync(accountTransactionFrom);
             if (result.Status != OperationStatus.Ok)
             {
-                return BadRequest();           
+                return BadRequest();
             }
 
             var accountTransactionTo = _mapper.Map<AccountTransaction>(transactionModel);
@@ -185,9 +181,8 @@ namespace sampleAccount.Web.Controllers
                 await _transactionService.DepositAsync(accountTransactionTo, 0);
                 return BadRequest();
             }
-            else {
-                return Ok(result.Balance);
-            }
+
+            return Ok(result.Balance);
         }
     }
 }

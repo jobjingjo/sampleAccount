@@ -1,17 +1,17 @@
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using sampleAccount.Abstract;
 using sampleAccount.Models;
 using sampleAccount.Services;
-using System.Threading.Tasks;
 
 namespace sampleAccount.Tests.Services
 {
     [TestClass]
     public class TransactionServiceTests
     {
-        private TransactionService _target;
         private Mock<IAccountRepository> _accountRepositoryMock;
+        private TransactionService _target;
 
         [TestInitialize]
         public void Setup()
@@ -25,9 +25,9 @@ namespace sampleAccount.Tests.Services
         public void Balance_WhenCalled_ShouldReturnValue()
         {
             //Arrange
-            string accountName = "mockAccount1";
+            var accountName = "mockAccount1";
             _accountRepositoryMock.Setup(x => x.FindAccount(accountName))
-                    .Returns(new Account());
+                .Returns(new Account());
 
             //Act
             var result = _target.Balance(accountName);
@@ -40,9 +40,9 @@ namespace sampleAccount.Tests.Services
         public void Balance_WhenNotFound_ShouldReturnStatusNotFound()
         {
             //Arrange
-            string accountName = "mockAccount1";
+            var accountName = "mockAccount1";
             _accountRepositoryMock.Setup(x => x.FindAccount(accountName))
-                    .Returns(() => null);
+                .Returns(() => null);
 
             //Act
             var result = _target.Balance(accountName);
@@ -55,7 +55,7 @@ namespace sampleAccount.Tests.Services
         public async Task Deposit_WhenNotFound_ShouldReturnStatusNotFound()
         {
             //Arrange
-            AccountTransaction accountTransaction = new AccountTransaction()
+            var accountTransaction = new AccountTransaction
             {
                 AccountName = "Mock",
                 Amount = 1000,
@@ -75,8 +75,8 @@ namespace sampleAccount.Tests.Services
         public async Task Deposit_WhenCalled_ShouldUpdateAndCollectFee()
         {
             //Arrange
-            Account account = new Account();
-            AccountTransaction accountTransaction = new AccountTransaction()
+            var account = new Account();
+            var accountTransaction = new AccountTransaction
             {
                 AccountName = "Mock",
                 Amount = 1000,
@@ -102,7 +102,7 @@ namespace sampleAccount.Tests.Services
         public async Task Withdraw_WhenNotFound_ShouldReturnStatusNotFound()
         {
             //Arrange
-            AccountTransaction accountTransaction = new AccountTransaction()
+            var accountTransaction = new AccountTransaction
             {
                 AccountName = "Mock",
                 Amount = 1000,
@@ -122,11 +122,11 @@ namespace sampleAccount.Tests.Services
         public async Task Withdraw_WhenCalled_ShouldUpdateAndCollectFee()
         {
             //Arrange
-            Account account = new Account()
+            var account = new Account
             {
                 Balance = 1000
             };
-            AccountTransaction accountTransaction = new AccountTransaction()
+            var accountTransaction = new AccountTransaction
             {
                 AccountName = "Mock",
                 Amount = 1000,
@@ -149,11 +149,11 @@ namespace sampleAccount.Tests.Services
         public async Task Withdraw_WhenNotEnoughMoney_ShouldReturnNotEnoughMoney()
         {
             //Arrange
-            Account account = new Account()
+            var account = new Account
             {
                 Balance = 100
             };
-            AccountTransaction accountTransaction = new AccountTransaction()
+            var accountTransaction = new AccountTransaction
             {
                 AccountName = "Mock",
                 Amount = 1000,
@@ -168,6 +168,5 @@ namespace sampleAccount.Tests.Services
             //Assert
             Assert.AreEqual(OperationStatus.NotEnoughMoney, result.Status);
         }
-
     }
 }

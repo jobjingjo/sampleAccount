@@ -1,6 +1,6 @@
-﻿using sampleAccount.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using sampleAccount.Models;
 
 namespace sampleAccount.Abstract
 {

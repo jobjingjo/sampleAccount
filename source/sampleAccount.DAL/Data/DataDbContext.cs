@@ -1,20 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using sampleAccount.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace sampleAccount.DAL.Data
 {
-    public class DataDbContext: DbContext
+    public class DataDbContext : DbContext
     {
-        public virtual DbSet<AccountEntity> Accounts { get; set; }
-        public virtual DbSet<TransactionEntity> Transactions { get; set; }
-
         public DataDbContext(DbContextOptions<DataDbContext> options)
-           : base(options)
+            : base(options)
         {
         }
+
+        public virtual DbSet<AccountEntity> Accounts { get; set; }
+        public virtual DbSet<TransactionEntity> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
