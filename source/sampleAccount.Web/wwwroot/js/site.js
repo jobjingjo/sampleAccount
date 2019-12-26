@@ -142,19 +142,17 @@
     function withdrawController($rootScope, $scope, accountService, $timeout, $window) {
 
         $scope.doWithdraw = function() {
-            accountService.withdraw($scope.amount).then(x => {
+            accountService.withdraw($scope.amount).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
                 $(".toast").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
     }
@@ -171,19 +169,17 @@
     function depositController($rootScope, $scope, accountService, $timeout, $window) {
 
         $scope.doDeposit = function() {
-            accountService.deposit($scope.amount).then(x => {
+            accountService.deposit($scope.amount).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
                 $(".toast").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
 
@@ -201,20 +197,17 @@
     function transferController($rootScope, $scope, accountService, $window, $timeout) {
 
         $scope.doTransfer = function() {
-            accountService.transfer($scope.amount, $scope.accountName).then(x => {
+            accountService.transfer($scope.amount, $scope.accountName).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
-                //$("#overlay").show();
                 $(".toast-ok").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
     }
@@ -231,8 +224,7 @@
 
         $scope.doSearch = function(page) {
             $("#overlay").show();
-            accountService.search(page).then(x => {
-                console.log(x);
+            accountService.search(page).then((x) => {
                 $rootScope.error = true;
                 $scope.items = x.result;
 
@@ -242,12 +234,11 @@
                 $scope.hasNextPage = x.hasNextPage;
 
                 $("#overlay").hide();
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = false;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
                 $scope.items = [];
-                console.log(err);
                 $("#overlay").hide();
             });
         };
