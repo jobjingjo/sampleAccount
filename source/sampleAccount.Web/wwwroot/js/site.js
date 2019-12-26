@@ -33,11 +33,6 @@
 
 (function() {
     "use strict";
-    angular
-        .module("myApp")
-        .factory("accountService", accountService);
-
-    accountService.$inject = ["$http", "$q", "$window", "$timeout"];
 
     function accountService($http, $q, $window, $timeout) {
         var baseUrl = "https://localhost:44318/Account/";
@@ -134,6 +129,10 @@
 
         return service;
     }
+
+    accountService.$inject = ["$http", "$q", "$window", "$timeout"];
+
+    angular.module("myApp").factory("accountService", accountService);
 }());
 
 (function() {
@@ -158,8 +157,8 @@
     }
 
     withdrawController.$inject = ["$rootScope", "$scope", "accountService", "$timeout", "$window"];
-    angular.module("myApp").controller("withdrawController", withdrawController);
 
+    angular.module("myApp").controller("withdrawController", withdrawController);
 }());
 
 
@@ -187,6 +186,7 @@
     }
 
     depositController.$inject = ["$rootScope", "$scope", "accountService", "$timeout", "$window"];
+
     angular.module("myApp").controller("depositController", depositController);
 
 }());
@@ -213,6 +213,7 @@
     }
 
     transferController.$inject = ["$rootScope", "$scope", "accountService", "$window", "$timeout"];
+
     angular.module("myApp").controller("transferController", transferController);
 
 }());
@@ -248,6 +249,7 @@
     }
 
     accountController.$inject = ["$rootScope", "$scope", "accountService", "$window", "$timeout"];
+
     angular.module("myApp").controller("accountController", accountController);
 
 }());
