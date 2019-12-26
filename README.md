@@ -5,18 +5,18 @@
 a simple account web application
 
 ##Technologies
-  - C#
-  - angularjs
-  - .Net Core
-  - EntityFramework
-  - Puppeteer
-  - Moq
-  - MVC
+*  C#
+*  angularjs
+*  .Net Core
+*  EntityFramework
+*  Puppeteer
+*  Moq
+*  MVC
  
 ##TODO
-  - Add audit logging
-  - Improve test coverage
-  - Improve security
-  - Add integration tests
-  - Add js tests
-  - Add web.controller tests
+*  Add audit logging
+*  Improve test coverage
+*  Improve security
+*  Add integration tests
+*  Add js tests
+*  Add web.controller tests

@@ -33,11 +33,6 @@
 
 (function() {
     "use strict";
-    angular
-        .module("myApp")
-        .factory("accountService", accountService);
-
-    accountService.$inject = ["$http", "$q", "$window", "$timeout"];
 
     function accountService($http, $q, $window, $timeout) {
         var baseUrl = "https://localhost:44318/Account/";
@@ -134,6 +129,10 @@
 
         return service;
     }
+
+    accountService.$inject = ["$http", "$q", "$window", "$timeout"];
+
+    angular.module("myApp").factory("accountService", accountService);
 }());
 
 (function() {
@@ -142,26 +141,24 @@
     function withdrawController($rootScope, $scope, accountService, $timeout, $window) {
 
         $scope.doWithdraw = function() {
-            accountService.withdraw($scope.amount).then(x => {
+            accountService.withdraw($scope.amount).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
                 $(".toast").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
     }
 
     withdrawController.$inject = ["$rootScope", "$scope", "accountService", "$timeout", "$window"];
-    angular.module("myApp").controller("withdrawController", withdrawController);
 
+    angular.module("myApp").controller("withdrawController", withdrawController);
 }());
 
 
@@ -171,19 +168,17 @@
     function depositController($rootScope, $scope, accountService, $timeout, $window) {
 
         $scope.doDeposit = function() {
-            accountService.deposit($scope.amount).then(x => {
+            accountService.deposit($scope.amount).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
                 $(".toast").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
 
@@ -191,6 +186,7 @@
     }
 
     depositController.$inject = ["$rootScope", "$scope", "accountService", "$timeout", "$window"];
+
     angular.module("myApp").controller("depositController", depositController);
 
 }());
@@ -201,25 +197,23 @@
     function transferController($rootScope, $scope, accountService, $window, $timeout) {
 
         $scope.doTransfer = function() {
-            accountService.transfer($scope.amount, $scope.accountName).then(x => {
+            accountService.transfer($scope.amount, $scope.accountName).then((x) => {
                 $rootScope.balance = x;
                 $rootScope.error = false;
-                console.log(x);
-                //$("#overlay").show();
                 $(".toast-ok").toast("show");
 
                 $timeout(function() { $window.location.href = "https://localhost:44318/Account/Index"; }, 1000);
 
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = true;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
-                console.log(err);
             });
         };
     }
 
     transferController.$inject = ["$rootScope", "$scope", "accountService", "$window", "$timeout"];
+
     angular.module("myApp").controller("transferController", transferController);
 
 }());
@@ -231,8 +225,7 @@
 
         $scope.doSearch = function(page) {
             $("#overlay").show();
-            accountService.search(page).then(x => {
-                console.log(x);
+            accountService.search(page).then((x) => {
                 $rootScope.error = true;
                 $scope.items = x.result;
 
@@ -242,12 +235,11 @@
                 $scope.hasNextPage = x.hasNextPage;
 
                 $("#overlay").hide();
-            }).catch(err => {
+            }).catch((err) => {
                 $rootScope.error = false;
                 $rootScope.errorMessage = err;
                 $(".toast").toast("show");
                 $scope.items = [];
-                console.log(err);
                 $("#overlay").hide();
             });
         };
@@ -257,6 +249,7 @@
     }
 
     accountController.$inject = ["$rootScope", "$scope", "accountService", "$window", "$timeout"];
+
     angular.module("myApp").controller("accountController", accountController);
 
 }());
